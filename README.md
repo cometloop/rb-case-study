@@ -103,6 +103,7 @@ When deleting an order, we soft delete the item by setting isDeleted to true on 
 - RabbitMQ doesn't require any auth
 - REST APIs are not protected
 - Add decorators around methods to do logging
+- I ignored some linting issues on purpose. Would not want to do that in a PROD app.
 - Shipping
 
   - For this demo, I assumed we handled 'setting up' shipping internally. I provided an API for the 3rd party shipping company where they could tell us when it was delivered. Ideally shipping would be its own microservice and support more nuanced shipping use cases and complexities.
