@@ -26,6 +26,10 @@ docker compose up
 
 - You will see logs in the console grouped by each docker service. I added some logs to show different parts of the order flow.
 
+### Postman
+
+I create a postman collection that you can use to test the API endpoints: [Postman collection](reebelo-case-study.postman_collection.json)
+
 ## System Artchitecture and Thought Process
 
 I wanted those `Bonus Points` so I chose NestJS (I never used it before until this case study). It felt very familiar given my experience working a lot with Angular 2+ in the past.
