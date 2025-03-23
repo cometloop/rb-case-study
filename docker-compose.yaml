@@ -1,0 +1,41 @@
+services:
+  order-management-api-gateway:
+    depends_on:
+      - rabbitmq
+    container_name: order-management-api-gateway
+    build:
+      context: .
+      dockerfile: ./apps/order-management-api-gateway/Dockerfile
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules # Avoid overwriting node_modules
+    command: yarn start order-management-api-gateway --watch
+    environment:
+      - PORT=3000
+  order-management-microservice:
+    depends_on:
+      - rabbitmq
+    container_name: order-management-microservice
+    build:
+      context: .
+      dockerfile: ./apps/order-management/Dockerfile
+    ports:
+      - '3001:3001'
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules # Avoid overwriting node_modules
+    command: yarn start order-management --watch
+    environment:
+      - PORT=3001
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    ports:
+      - '5672:5672' # AMQP port
+      - '15672:15672' # Management UI port
+    volumes:
+      - ./rabbitmq-data:/var/lib/rabbitmq # Persistent storage for RabbitMQ data
+    environment:
+      RABBITMQ_DEFAULT_VHOST: '/' # Default virtual host
