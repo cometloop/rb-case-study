@@ -7,11 +7,11 @@ export const Subjects = {
     Upate: 'orders.update',
     UpateStatus: 'orders.update.status',
     Delete: 'orders.delete',
+    Cancel: 'orders.cancel',
+    Delivered: 'orders.delivered',
   },
   OrderRequestQueue: {
     GetAll: 'orders.getAll',
     FindOne: 'orders.findOne',
-    Cancel: 'orders.cancel',
-    Delivered: 'orders.delivered',
   },
 } as const;

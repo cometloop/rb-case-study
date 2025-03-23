@@ -49,10 +49,10 @@ export class OrdersService {
   }
 
   cancelOrder(id: string) {
-    return this.ordersRequestClient.send(
+    return this.ordersWorkerQueueClient.send(
       {
-        queue: OrderRequestQueue,
-        subject: Subjects.OrderRequestQueue.Cancel,
+        queue: OrderWorkerQueue,
+        subject: Subjects.OrderWorkerQueue.Cancel,
       },
       id,
     );
@@ -64,10 +64,10 @@ export class OrdersService {
       ...message,
     };
 
-    return this.ordersRequestClient.send(
+    return this.ordersWorkerQueueClient.send(
       {
-        queue: OrderRequestQueue,
-        subject: Subjects.OrderRequestQueue.Delivered,
+        queue: OrderWorkerQueue,
+        subject: Subjects.OrderWorkerQueue.Delivered,
       },
       messageDto,
     );

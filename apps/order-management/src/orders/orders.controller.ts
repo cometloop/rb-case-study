@@ -160,22 +160,31 @@ export class OrdersController {
 
   @UseGuards(new ZodValidationGuard(OrderDeliveredDtoSchema))
   @MessagePattern({
-    queue: OrderRequestQueue,
-    subject: Subjects.OrderRequestQueue.Delivered,
+    queue: OrderWorkerQueue,
+    subject: Subjects.OrderWorkerQueue.Delivered,
   })
-  async orderDelivered(@Payload() orderDeliveredDto: OrderDeliveredDto) {
+  async orderDelivered(
+    @Payload() orderDeliveredDto: OrderDeliveredDto,
+    @Ctx() context: RmqContext,
+  ) {
     console.log('orders.delivered', orderDeliveredDto);
     const result = await this.ordersService.orderDelivered(orderDeliveredDto);
-
+    if (result.status === Status.SUCCESS) {
+      this.ackService.ack(context);
+    }
     return result;
   }
 
   @MessagePattern({
-    queue: OrderRequestQueue,
-    subject: Subjects.OrderRequestQueue.Cancel,
+    queue: OrderWorkerQueue,
+    subject: Subjects.OrderWorkerQueue.Cancel,
   })
-  orderDelete(@Payload() id: string) {
+  orderDelete(@Payload() id: string, @Ctx() context: RmqContext) {
     console.log('cancel called');
-    return this.ordersService.cancel(id);
+    const result = this.ordersService.cancel(id);
+    if (result.status === Status.SUCCESS) {
+      this.ackService.ack(context);
+    }
+    return result;
   }
 }

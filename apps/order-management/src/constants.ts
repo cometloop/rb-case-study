@@ -9,11 +9,11 @@ export const Subjects = {
     Update: 'orders.update',
     UpateStatus: 'orders.update.status',
     Delete: 'orders.delete',
+    Cancel: 'orders.cancel',
+    Delivered: 'orders.delivered',
   },
   OrderRequestQueue: {
     GetAll: 'orders.getAll',
     FindOne: 'orders.findOne',
-    Delivered: 'orders.delivered',
-    Cancel: 'orders.cancel',
   },
 } as const;
